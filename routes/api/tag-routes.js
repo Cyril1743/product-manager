@@ -28,11 +28,24 @@ await Tag.create({
 
 router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value
+  await Tag.update({
+    tag_name: req.body.tag_name
+  }, {
+    where: {
+      id: req.params.id
+    }
+  }).then(() => res.status(200).json("Updated")).catch((err) => res.status(400).json(err))
 
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   // delete on tag by its `id` value
+  await Tag.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(() => res.status(200).json("Deleted")).catch((err) => res.status(400).json(err))
+
 });
 
 module.exports = router;
